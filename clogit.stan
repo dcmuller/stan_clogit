@@ -1,3 +1,9 @@
+## clogit.stan
+## Conditional logistic regression 
+## (the same likelihood calculation as used by survival::clogit in R and 
+## clogit in Stata)
+## David C Muller
+
 functions {
   ## function to return the number of observatios in a group
   int group_size(vector ref, int value) {
