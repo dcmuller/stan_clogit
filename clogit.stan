@@ -54,13 +54,14 @@ functions {
 }
 
 data {
-  int<lower=0> N;
-  int<lower=1> n_grp;
-  int<lower=1> n_coef;
-  int<lower=1, upper=n_grp> grp[N];
-  vector[N] y;
-  matrix[N, n_coef] x;
+  int<lower=0> N; # Number of observations
+  int<lower=1> n_grp; # Number of groups
+  int<lower=1> n_coef; # Number of coefficients (log odds ratios) to estimate
+  int<lower=1, upper=n_grp> grp[N]; # stratum/group identifier
+  vector[N] y; # vector of 0/1 outcomes
+  matrix[N, n_coef] x; # Matrix of regressors
 }
+
 transformed data {
  int n_group[n_grp]; # number of observations in the group
  int n_case[n_grp]; # number of cases/events in the group
@@ -69,6 +70,7 @@ transformed data {
    n_case[ii] <- n_cases(subset_vector(y, to_vector(grp), ii));
  }
 }
+
 parameters {
   vector[n_coef] b;
 }
@@ -77,6 +79,7 @@ transformed parameters {
   vector[n_coef] oddsratio;
   oddsratio <- exp(b);
 }
+
 model {
   vector[N] xb; # observation level linear predictor
   real ll; # log likelihood
