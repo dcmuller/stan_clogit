@@ -48,7 +48,7 @@ functions {
     if (D_g == 0) {
       return 1;
     }
-    res <- cl_denom(N_g-1, D_g, xb) + cl_denom(N_g-1, D_g-1, xb)*exp(xb[N_g]);
+    res <- cl_denom(N_g-1, D_g, xb) + exp(log(cl_denom(N_g-1, D_g-1, xb)) + xb[N_g]);
     return res;
   }
 }
